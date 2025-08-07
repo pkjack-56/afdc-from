@@ -207,6 +207,7 @@ export default function UnitSelector() {
     link.click();
   };
 
+
   // ---- คำแนะนำจำนวนรูป ----
   const renderImagesHint = () => {
     if (unitsCount === 1) return "คำแนะนำ: ใช้ได้สูงสุด 6 รูป";
@@ -228,6 +229,8 @@ export default function UnitSelector() {
     <option value="1">สำนักงานพัฒนาภาค 1</option>
     <option value="2">สำนักงานพัฒนาภาค 2</option>
     <option value="3">สำนักงานพัฒนาภาค 3</option>
+    <option value="4">สำนักงานพัฒนาภาค 4</option>
+    <option value="5">สำนักงานพัฒนาภาค 5</option>
   </select>
 </div>
 
@@ -256,70 +259,7 @@ export default function UnitSelector() {
       <div className="space-y-3">
         {Array.from({ length: unitsCount }, (_, i) => (
           <div key={`unit-${i}`} className="rounded border p-3">
-            <div className="grid md:grid-cols-2 gap-3">
-              {/* กองหลักของหน่วย */}
-              <div>
-                <label className="block text-lg font-medium mb-1">กองหลักของหน่วยที่ {i + 1}</label>
-                <select
-                  value={mainDepts[i] ?? ""}
-                  onChange={(e) => {
-                    const v = e.target.value;
-                    setMainDepts((prev) => {
-                      const next = [...prev];
-                      next[i] = v;
-                      return next;
-                    });
-                    // เมื่อเปลี่ยนกองหลัก เคลียร์หน่วยย่อย
-                    setSubDepts((prev) => {
-                      const next = [...prev];
-                      next[i] = "";
-                      return next;
-                    });
-                  }}
-                  className="border border-blue-500 p-2 w-full rounded"
-                >
-                  <option value="">-- เลือกกองหลัก --</option>
-                  {Object.keys(subDeptOptions).map((dept) => (
-                    <option key={`dept-${i}-${dept}`} value={dept}>
-                      {dept}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {/* หน่วยย่อยของหน่วย */}
-              <div>
-                <label className="block text-lg font-medium mb-1">หน่วยงานย่อยของหน่วยที่ {i + 1}</label>
-                <select
-                  key={mainDepts[i] || `none-${i}`}
-                  value={subDepts[i] ?? ""}
-                  onChange={(e) => {
-                    const v = e.target.value;
-                    setSubDepts((prev) => {
-                      const next = [...prev];
-                      next[i] = v;
-                      return next;
-                    });
-                    // ถ้าข้อความยังว่าง เติมชื่อหน่วยย่อยขึ้นบรรทัดแรก
-                    setUnitMessages((prev) => {
-                      const next = [...prev];
-                      if (!next[i] || next[i].trim().length === 0) {
-                        next[i] = v ? `${v}\n` : "";
-                      }
-                      return next;
-                    });
-                  }}
-                  className="border border-blue-500 p-2 w-full rounded"
-                >
-                  <option value="">-- เลือกหน่วยงานย่อย --</option>
-                  {(subDeptOptions[mainDepts[i]] || []).map((unit) => (
-                    <option key={`sub-${i}-${unit}`} value={unit}>
-                      {unit}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
+            
 
             {/* ข้อความของหน่วย (ยังคงมีชื่อหน่วยย่อยอัตโนมัติถ้าไม่พิมพ์เอง) */}
             <label className="block text-lg font-medium mt-3 mb-1">ข้อความของหน่วยที่ {i + 1}</label>
@@ -391,7 +331,7 @@ export default function UnitSelector() {
             style={{
               // ย่อ preview ให้กว้าง ~794px (พอดีจอ) แต่ยังคงสัดส่วน A4
               width: "794px",
-              aspectRatio: "2480/3508",
+              aspectRatio: "2486/3900",
               padding: "24px",
               boxSizing: "border-box",
               color: "rgb(17,24,39)",
@@ -420,26 +360,26 @@ export default function UnitSelector() {
   โดย สำนักงานพัฒนาภาค {officeRegion} หน่วยบัญชาการทหารพัฒนา
 </p>
 
-                <p style={{ color: "rgb(2,132,199)", fontSize: "20px" /* sky-600 */ }}>
+                <p style={{ color: "rgb(2,132,199)", fontSize: "20px",marginBottom: "20px" /* sky-600 */ }}>
                   {date
                     ? `ประจำวันที่ ${new Date(date).toLocaleDateString("th-TH", {
                         year: "numeric",
-                        month: "short",
+                        month: "long",
                         day: "numeric",
                       })}`
                     : "ประจำวันที่ -"}
                 </p>
               </div>
-              <img src="/images/images.png" alt="" style={{ width: "70px", height: "78px", objectFit: "contain" }} />
+              <img src="/images/images.png" alt="" style={{ width: "75px", height: "65px", objectFit: "contain" }} />
             </div>
 
             {/* ===== เนื้อหาแต่ละหน่วย (ไม่มีชื่อหน่วยเป็นหัวเรื่องเหนือรูป) ===== */}
-            <div style={{ marginTop: "18px", display: "grid", rowGap: "18px" }}>
+            <div style={{ marginTop: "18px", display: "grid", rowGap: "1px" }}>
               {Array.from({ length: unitsCount }, (_, i) => {
                 const imgs = getImagesForUnit(i);
                 const text = unitMessages[i] || "";
                 return (
-                  <section key={`unit-sec-${i}`} style={{ display: "grid", rowGap: "10px" }}>
+                  <section key={`unit-sec-${i}`} style={{ display: "grid", rowGap: "0px" }}>
                     {/* รูป */}
                     <div
                       style={{
