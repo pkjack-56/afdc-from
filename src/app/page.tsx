@@ -331,7 +331,7 @@ export default function UnitSelector() {
             style={{
               // ย่อ preview ให้กว้าง ~794px (พอดีจอ) แต่ยังคงสัดส่วน A4
               width: "794px",
-              aspectRatio: "2486/3900",
+              aspectRatio: "auto 1 / 1.4142", // A4 ratio (210mm x 297mm)
               padding: "24px",
               boxSizing: "border-box",
               color: "rgb(17,24,39)",
