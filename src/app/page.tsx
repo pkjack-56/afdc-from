@@ -412,7 +412,7 @@ export default function UnitSelector() {
                           
                           color: "rgb(0,0,0)",
                           whiteSpace: "pre-line",
-                          fontSize: fontSizes[i] || 18, // ใช้ขนาดฟอนต์ที่คำนวณไว้
+                          fontSize: fontSizes[i] || 30, // ใช้ขนาดฟอนต์ที่คำนวณไว้
                           lineHeight: 1.5,
                           maxHeight: "12em", // ประมาณ 3 บรรทัด (1.5em * 3)
                           overflow: "hidden", // ซ่อนเกิน 3 บรรทัด
